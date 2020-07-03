@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+
+<header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %})">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>Crypto News</h1>
+          <span class="subheading">Hi, Welcome to Crypto News</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <br>
+  <br>
+  <h1>Top 10 Cryptocurrencies</h1>
+  <br>
+  <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Currency</th>
+          <th>Price</th>
+          <th>Last Update</th>
+          <th>24h Lowest Price</th>
+          <th>24h highest Price</th>
+          <th>Market Capital</th>
+        </tr>
+      </thead>
+      {% for key,values in data.DISPLAY.items %}
+      <tbody>
+        <tr>
+          <td>{{ key }}</td>
+          <td>{{ values.USD.PRICE }}</td>
+          <td>{{ values.USD.LASTUPDATE }}</td>
+          <td>{{ values.USD.LOWDAY }}</td>
+          <td>{{ values.USD.HIGHDAY }}</td>
+          <td>{{ values.USD.MKTCAP }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+    <br><br><br>
+    <h1>Latest News</h1>
+    <br>
+    <div class="container">
+      <div class="row">
+        {% for card in news_data.Data %}
+        <div class="col-lg-4 col-sm">
+          <div class="card" style=" width: 18rem;">
+            <img src="{{card.imageurl}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{card.title}}</h5>
+              <p class="card-text">{{card.body|truncatechars:100}}</p>
+              <a href="{{card.url}}" target="_blank" class="btn btn-primary">See More</a>
+           </div>
+        </div>
+        <br>
+      </div>
+        {% endfor %}
+       </div>
+     </div>
+
+</div>
+
+{% endblock %}

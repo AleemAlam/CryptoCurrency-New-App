@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+
+
+<header class="masthead" style="background-image: url({% static 'img/home-bg.jpg' %})">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>Look Up</h1>
+          <span class="subheading">Please Search Currency Name on the search bar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+
+<div class="container">
+
+  <br>
+  {% if data.Response %}
+  <h3 style="color:red;">This Currency does not exist </h3>
+  {% endif %}
+  <h4>{{msg}}</h4>
+  <br>
+  <form action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="exampleInputEmail1">Currency:</label>
+      <input type="text" name= 'search' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Currency Here">
+      <small id="emailHelp" class="form-text text-muted">You can multisearch more Currency just seprate currencies with (,) eg: BTC,ETH</small>
+    </div>
+    <button type="submit" class="btn btn-dark" name="button">Search</button>
+  </form>
+  <br>
+  {% if data.DISPLAY %}
+  <div class="jumbotron bg-light text-dark">
+    {% for key,values in data.DISPLAY.items %}
+      <h2>{{ key }}</h2>
+      <ul>
+        <li><strong>Price: </strong>{{ values.USD.PRICE }}</li>
+        <li><strong>Last Update: </strong>{{ values.USD.LASTUPDATE }}</li>
+        <li><strong>24h Lowest Price: </strong>{{ values.USD.LOWDAY }}</li>
+        <li><strong>24h highest Price: </strong>{{ values.USD.HIGHDAY }}</li>
+        <li><strong>Market Capital: </strong>{{ values.USD.MKTCAP }}</li>
+      </ul>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+
+</div>
+
+
+
+{% endblock %}
